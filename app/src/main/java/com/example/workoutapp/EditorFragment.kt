@@ -23,7 +23,6 @@ class EditorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         (activity as AppCompatActivity).supportActionBar?.let{
             it.setHomeButtonEnabled(true)
             it.setDisplayShowHomeEnabled(true)

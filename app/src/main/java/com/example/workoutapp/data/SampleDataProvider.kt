@@ -1,6 +1,5 @@
-package com.example.workoutapp
+package com.example.workoutapp.data
 
-import com.example.workoutapp.data.NoteEntity
 import java.util.*
 
 class SampleDataProvider {
