@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">workoutApp</string>
+    <string name="add_sample_data">Add sample data</string>
+    <string name="delete">delete</string>
+    <string name="delete_all_notes">Delete all notes</string>
 </resources>

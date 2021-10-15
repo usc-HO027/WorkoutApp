@@ -10,8 +10,10 @@ import com.example.workoutapp.databinding.ListItemBinding
 
 class NotesListAdapter(private val notesList: List<NoteEntity>,
 private val listener: ListItemListener) :
-
     RecyclerView.Adapter<NotesListAdapter.ViewHolder>(){
+
+    val selectedNotes= arrayListOf<NoteEntity>()
+
     inner class ViewHolder(itemView: View):
         RecyclerView.ViewHolder(itemView){
         val binding = ListItemBinding.bind(itemView)
@@ -32,9 +34,27 @@ private val listener: ListItemListener) :
             root.setOnClickListener{
                 listener.onItemClick(note.id)
             }
+            fab.setOnClickListener{
+                if(selectedNotes.contains(note)){
+                    selectedNotes.remove(note)
+                    fab.setImageResource(R.drawable.ic_notes)
+                }else{
+                    selectedNotes.add(note)
+                    fab.setImageResource(R.drawable.ic_check)
+                }
+                listener.onItemSelectionChanged()
+            }
+            fab.setImageResource(
+                if(selectedNotes.contains(note)){
+                    R.drawable.ic_check
+                }else{
+                    R.drawable.ic_notes
+                }
+            )
         }
     }
     interface ListItemListener{
         fun onItemClick(noteId:Int)
+        fun onItemSelectionChanged()
     }
 }
