@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.workoutapp.data.NoteEntity
 import com.example.workoutapp.databinding.MainFragmentBinding
 
 
@@ -44,7 +45,11 @@ NotesListAdapter.ListItemListener{
             adapter = NotesListAdapter(it,this@MainFragment)
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+
+            val selectedNotes = savedInstanceState?.getParcelableArrayList<NoteEntity>(SELECTED_NOTES_KEY)
+            adapter.selectedNotes.addAll(selectedNotes?: emptyList())
         })
+
         binding.floatingActionButton.setOnClickListener{
             editNote(NEW_NOTE_ID)
         }
@@ -99,5 +104,12 @@ NotesListAdapter.ListItemListener{
 
     override fun onItemSelectionChanged() {
         requireActivity().invalidateOptionsMenu()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if(this::adapter.isInitialized){
+            outState.putParcelableArrayList(SELECTED_NOTES_KEY, adapter.selectedNotes)
+        }
+            super.onSaveInstanceState(outState)
     }
 }
