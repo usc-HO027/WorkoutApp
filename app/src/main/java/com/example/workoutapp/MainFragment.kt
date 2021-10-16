@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workoutapp.databinding.MainFragmentBinding
 
@@ -32,6 +31,9 @@ NotesListAdapter.ListItemListener{
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         with(binding.recyclerView){
             setHasFixedSize(true)
+
+            requireActivity().title =getString(R.string.app_name)
+
             val divider = androidx.recyclerview.widget.DividerItemDecoration(
                 context, androidx.recyclerview.widget.LinearLayoutManager(context).orientation
             )
@@ -43,6 +45,9 @@ NotesListAdapter.ListItemListener{
             binding.recyclerView.adapter = adapter
             binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         })
+        binding.floatingActionButton.setOnClickListener{
+            editNote(NEW_NOTE_ID)
+        }
         return binding.root
     }
 
@@ -65,7 +70,6 @@ NotesListAdapter.ListItemListener{
             R.id.action_delete_all-> deleteAllNotes()
             else-> return super.onOptionsItemSelected(item)
         }
-
     }
 
     private fun deleteAllNotes(): Boolean {
@@ -87,7 +91,7 @@ NotesListAdapter.ListItemListener{
         return true
     }
 
-    override fun onItemClick(noteId: Int) {
+    override fun editNote(noteId: Int) {
         Log.i(TAG,"onItemClick:received note id $noteId")
         val action = MainFragmentDirections.actionEditNote(noteId)
         findNavController().navigate(action)

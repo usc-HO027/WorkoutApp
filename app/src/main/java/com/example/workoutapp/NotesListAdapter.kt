@@ -1,7 +1,6 @@
 package com.example.workoutapp
 
 import android.view.LayoutInflater
-import android.view.OrientationEventListener
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +31,7 @@ private val listener: ListItemListener) :
         with(holder.binding){
             noteText.text = note.text
             root.setOnClickListener{
-                listener.onItemClick(note.id)
+                listener.editNote(note.id)
             }
             fab.setOnClickListener{
                 if(selectedNotes.contains(note)){
@@ -54,7 +53,7 @@ private val listener: ListItemListener) :
         }
     }
     interface ListItemListener{
-        fun onItemClick(noteId:Int)
+        fun editNote(noteId:Int)
         fun onItemSelectionChanged()
     }
 }
